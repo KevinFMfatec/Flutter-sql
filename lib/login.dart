@@ -30,18 +30,19 @@ class LoginState extends State<Login> {
     }
   }
 
-Future<bool> login(String email, String senha) async {
-  try {
-    List<Usuario> usuarios = await _database.getUserByEmailAndPassword(email, senha);
-    if (usuarios.isNotEmpty) {
-      return true;
+  Future<bool> login(String email, String senha) async {
+    try {
+      List<Usuario> usuarios =
+          await _database.getUserByEmailAndPassword(email, senha);
+      if (usuarios.isNotEmpty) {
+        return true;
+      }
+      return false;
+    } catch (error) {
+      print(error);
+      return false;
     }
-    return false;
-  } catch (error) {
-    print(error);
-    return false;
   }
-}
 
   final TextEditingController _usuario = TextEditingController();
   final TextEditingController _senha = TextEditingController();
@@ -54,61 +55,75 @@ Future<bool> login(String email, String senha) async {
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              height: 200,
-              width: 200,
+              height: 300,
+              width: 300,
               decoration: const BoxDecoration(
                 shape: BoxShape.circle,
                 image: DecorationImage(
-                  image: AssetImage('assets/images/duck.png'),
+                  image: AssetImage('assets/images/pato.jpg'),
                   fit: BoxFit.cover,
                 ),
               ),
             ),
+            const SizedBox(height: 5.0),
             const Text(
-              'Usuario',
-              style: TextStyle(fontSize: 28.0, color: Colors.blue),
+              'Usuário',
+              style: TextStyle(fontSize: 18.0, color: Color.fromARGB(255, 3, 46, 81)),
             ),
-            TextField(
-              controller: _usuario,
-              keyboardType: TextInputType.text,
-              decoration: const InputDecoration(
-                hintText: "Usuario",
-                prefixIcon: Icon(Icons.account_circle_outlined),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.blue),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.blue),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 40.0),
+              child: TextField(
+                controller: _usuario,
+                keyboardType: TextInputType.text,
+                decoration: InputDecoration(
+                  hintText: "Usuário",
+                  prefixIcon: const Icon(Icons.account_circle_outlined),
+                  contentPadding: const EdgeInsets.symmetric(vertical: 15.0),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Color.fromARGB(255, 3, 46, 81)),
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Color.fromARGB(255, 3, 46, 81)),
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
                 ),
               ),
             ),
+            const SizedBox(height: 20.0),
             const Text(
               'Senha',
-              style: TextStyle(fontSize: 28.0, color: Colors.blue),
+              style: TextStyle(fontSize: 18.0, color: Color.fromARGB(255, 3, 46, 81)),
             ),
-            TextField(
-              obscureText: true,
-              obscuringCharacter: "*",
-              controller: _senha,
-              keyboardType: TextInputType.text,
-              decoration: const InputDecoration(
-                hintText: "Entre com a senha",
-                prefixIcon: Icon(Icons.lock),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.grey),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.blue),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 40.0),
+              child: TextField(
+                obscureText: true,
+                obscuringCharacter: "*",
+                controller: _senha,
+                keyboardType: TextInputType.text,
+                decoration: InputDecoration(
+                  hintText: "Entre com a senha",
+                  prefixIcon: const Icon(Icons.lock),
+                  contentPadding: const EdgeInsets.symmetric(vertical: 15.0),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Color.fromARGB(255, 3, 46, 81)),
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Color.fromARGB(255, 3, 46, 81)),
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
                 ),
               ),
             ),
-            const SizedBox(height: 50.0),
+            const SizedBox(height: 30.0),
             SizedBox(
               width: 170,
               child: ElevatedButton(
                 onPressed: () async {
                   bool ret = await login(_usuario.text, _senha.text);
-                  if(ret){
+                  if (ret) {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -119,8 +134,9 @@ Future<bool> login(String email, String senha) async {
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                        content: Text('Login inválido, email ou senha incorretos!'),
-                        backgroundColor: Color(Colors.red.value),
+                        content: const Text(
+                            'Login inválido, email ou senha incorretos!'),
+                        backgroundColor: Colors.red,
                       ),
                     );
                   }

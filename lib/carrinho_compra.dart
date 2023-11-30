@@ -19,8 +19,8 @@ class CarrinhoCompraState extends State<CarrinhoCompra> {
   List<int> quantidadesList = [];
   bool desconto = false;
   Color textColor = Colors.black;
-  Color textColorWarning = Colors.yellow;
-  Color borderColor = Colors.green;
+  Color textColorWarning = Colors.grey;
+  Color borderColor = Colors.grey;
 
   @override
   void initState() {
@@ -84,15 +84,15 @@ class CarrinhoCompraState extends State<CarrinhoCompra> {
           children: [
             const SizedBox(height: 50.0),
             Text('Quantidade de produtos ${calcularQuantidadeTotal()}',
-                style: TextStyle(fontSize: 25.0, color: Colors.blue)),
+                style: TextStyle(fontSize: 25.0, color: Color.fromARGB(255, 3, 46, 81))),
             Text('Valor total: ${calcularValorTotal()[0]}',
-                style: TextStyle(fontSize: 25.0, color: Colors.blue)),
+                style: TextStyle(fontSize: 25.0, color: Color.fromARGB(255, 3, 46, 81))),
             Text(desconto ? 'Desconto: 5%' : 'Desconto: 0%'),
             desconto ? Text("Desconto: ${calcularValorTotal()[1]}") : Text(""),
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
-                  border: Border.all(color: Colors.green, width: 1.0),
+                  border: Border.all(color: Colors.grey, width: 1.0),
                 ),
                 child: ListView.builder(
                   itemCount: _produtos.length,
@@ -181,7 +181,7 @@ class CarrinhoCompraState extends State<CarrinhoCompra> {
                   onPressed: () {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                          backgroundColor: Color(Colors.green.value),
+                          backgroundColor: Color(Color.fromARGB(255, 58, 172, 243).value),
                           content: Text('Pedido Enviado Com Sucesso')),
                     );
                   },

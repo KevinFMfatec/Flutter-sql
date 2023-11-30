@@ -80,11 +80,11 @@ class ListagemProdutosState extends State<ListagemProdutos> {
           mainAxisSize: MainAxisSize.min,
           children: [
             const Text('Selecionar Produto',
-                style: TextStyle(fontSize: 25.0, color: Colors.red)),
+                style: TextStyle(fontSize: 25.0, color: Color.fromARGB(255, 3, 46, 81))),
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
-                  border: Border.all(color: Colors.green, width: 1.0),
+                  border: Border.all(color: const Color.fromARGB(255, 100, 99, 99), width: 1.0),
                 ),
                 child: ListView.builder(
                   itemCount: _produtos.length,
@@ -105,8 +105,8 @@ class ListagemProdutosState extends State<ListagemProdutos> {
                         child: Container(
                           decoration: BoxDecoration(
                             color: selecionadosIndices.contains(index)
-                                ? Colors.red
-                                : Colors.green[200],
+                                ? const Color.fromARGB(255, 141, 199, 247)
+                                : Colors.grey[200],
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                           child: Padding(

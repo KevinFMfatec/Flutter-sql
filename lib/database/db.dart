@@ -14,14 +14,7 @@ class DB {
   static DB get instance => _instance;
 
   late List<String> inserts = [
-    "INSERT INTO usuarios(id, nome, email, senha) VALUES(1,'Nicolas', 'nicolas@gmail.com', 'senha')",
-    "INSERT INTO usuarios(id, nome, email, senha) VALUES(2,'Rodrigo', 'rodrigo@gmail.com','senha')",
-    "INSERT INTO usuarios(id, nome, email, senha) VALUES(3,'Raniel', 'raniel@gmail.com','senha')",
-    "INSERT INTO usuarios(id, nome, email, senha) VALUES(4,'Natalia', 'natalia@gmail.com','senha')",
-    "INSERT INTO usuarios(id, nome, email, senha) VALUES(5,'Rafael', 'rafael@gmail.com','senha')",
-    "INSERT INTO usuarios(id, nome, email, senha) VALUES(6,'Kevin', 'kevin@gmail.com','senha')",
-    "INSERT INTO usuarios(id, nome, email, senha) VALUES(7,'Vinicius', 'vinicius@gmail.com','senha')",
-    "INSERT INTO usuarios(id, nome, email, senha) VALUES(8,'Antonio', 'antonio@gmail.com','senha')",
+    "INSERT INTO usuarios(id, nome, email, senha) VALUES(1,'Vinicius', 'vinicius@gmail.com','12345678')",
   ];
 
   Future<void> openDatabaseConnection() async {
@@ -30,9 +23,7 @@ class DB {
       path,
       version: 1,
       onCreate: (db, version) async {
-        await db.execute('''DROP TABLE usuarios''');
-        await db.execute('''DROP TABLE produtos''');
-        await db.execute('''DROP TABLE compras''');
+
         await db.execute(
           '''CREATE TABLE usuarios(
               id INTEGER PRIMARY KEY AUTOINCREMENT, 
@@ -63,6 +54,7 @@ class DB {
       },
     );
     List<Usuario> users = await getAllUsuarios();
+    print(users);
     if (users.isEmpty) {
       print("Executando inserts...");
       for (int i = 0; i < inserts.length; i++) {
@@ -87,9 +79,11 @@ class DB {
     });
   }
 
-  Future<List<Usuario>> getUserByEmailAndPassword(String email, String senha) async {
+  Future<List<Usuario>> getUserByEmailAndPassword(
+      String email, String senha) async {
     String query = "SELECT * FROM usuarios WHERE email = ? AND senha = ?";
-    final List<Map<String, dynamic>> maps = await _database.rawQuery(query, ['$email', '$senha']);
+    final List<Map<String, dynamic>> maps =
+        await _database.rawQuery(query, ['$email', '$senha']);
     if (maps.isNotEmpty) {
       return List.generate(maps.length, (i) {
         return Usuario(
@@ -98,7 +92,7 @@ class DB {
             email: maps[i]["email"],
             senha: maps[i]['senha']);
       });
-    }else{
+    } else {
       return [];
     }
   }
@@ -109,8 +103,9 @@ class DB {
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
       for (int i = 0; i < jsonResponse.length; i++) {
-        List<Produto> produtos = await getProductByName(jsonResponse[i]['nome']);
-        if (!produtos.isEmpty) {
+        List<Produto> produtos =
+            await getProductByName(jsonResponse[i]['nome']);
+        if (produtos.isEmpty) {
           String query =
               "INSERT INTO produtos(nome,descricao, preco, quantidade) VALUES('${jsonResponse[i]['nome']}','${jsonResponse[i]['descricao']}', ${jsonResponse[i]['preco']}, ${jsonResponse[i]['quantidade']})";
           await _database.execute(query);
