@@ -59,7 +59,7 @@ Future<bool> login(String email, String senha) async {
               decoration: const BoxDecoration(
                 shape: BoxShape.circle,
                 image: DecorationImage(
-                  image: AssetImage('assets/images/pato.jpg'),
+                  image: AssetImage('assets/images/duck.png'),
                   fit: BoxFit.cover,
                 ),
               ),
