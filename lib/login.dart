@@ -60,7 +60,7 @@ class LoginState extends State<Login> {
               decoration: const BoxDecoration(
                 shape: BoxShape.circle,
                 image: DecorationImage(
-                  image: AssetImage('assets/images/duck.png'),
+                  image: AssetImage('assets/images/flutter.png'),
                   fit: BoxFit.cover,
                 ),
               ),
